@@ -114,7 +114,11 @@ def cript(texto, alfabeto, codesc, senha, codsen, erabe):
 			for k in alfabeto:
 				if int(n)==alfabeto.index(k):
 					res+=k
-		
+					
+		#para caso o texto criptografado esteja errado
+		if res=='':
+			print('Não reconheço o texto ou a senha esta errada.')
+			
 		print(res)
 		
 	else:
