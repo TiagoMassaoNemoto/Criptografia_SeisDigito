@@ -1,0 +1,137 @@
+def cript(texto, alfabeto, codesc, senha, codsen, erabe):
+	if erabe=='c':
+		num_esc=[]
+		num_sen=''
+		crip=[]
+		sen=[]
+		res=''
+	
+		#texto para codigo
+		for x in texto:
+			for ka in alfabeto:
+				if x==ka:
+					num_esc.append(str(alfabeto.index(ka)))
+		for z in num_esc:
+			for y in codesc:
+				if int(z)==codesc.index(y):
+					crip.append(y)
+						
+		#senha para criptografar e descriptografar			
+		for a in senha:
+			for ka in alfabeto:
+				if a==ka:
+					num_sen += str(alfabeto.index(ka))
+		for c in num_sen:
+			for b in codsen:
+				if int(c)==codsen.index(b):
+					sen.append(b)
+				
+		#para igualar os itens da chave com o texto a ser criptografado
+		w=len(crip)
+		v=len(sen)
+		while v<w:
+			s=len(crip)-len(sen)
+			for h in sen[:int(s):]:
+				sen.append(h)
+			v=len(sen)
+		
+		#ta pegando elemento do cod e cada numero somando
+		t=0
+		u=0
+		for m in crip:		
+			soma=int(crip[t])+int(sen[u])
+			res+=str(soma)
+			t+=1
+			u+=1
+		print(res)
+		
+	elif erabe=='d':
+		#vendo se tem só numeros
+		for x in texto:
+			if x!='1' and x!='2' and x!='3' and x!='4' and x!='5' and x!='6' and x!='7' and x!='8' and x!='9' and x!='0':
+				print('Só aceito numeros para descriptografar')
+				quit()
+		#para separar os numeros de 6 em 6 do texto
+		tt=len(texto)/6
+		junt=''
+		texts=[]
+		uu=0
+		yy=6
+		zz=0
+		while uu<tt:
+			uu+=1
+			for ad in texto[zz:yy:]:
+				junt+=ad
+			texts.append(junt)
+			junt=''
+			yy+=6
+			zz+=6
+	
+		#igualando a quantidade de items texto=senha
+		num_sen=''
+		sen=[]
+		senha=list(senha)
+		w=len(texts)
+		v=len(senha)
+		while v<w:
+			s=w-v
+			for h in senha[:int(s):]:
+				senha.append(h)
+			v=len(senha)
+			
+		#transformando senha em numeros
+		for a in senha:
+			for k in alfabeto:
+				if a==k:
+					num_sen+= str(alfabeto.index(k))
+						
+		for c in num_sen:
+			for b in codsen:
+				if codsen.index(b)==int(c):
+					sen.append(b)
+					
+		#descriptografando
+		qtd=0
+		quant=len(texts)
+		descr=[]
+		while qtd<quant:
+			senh=sen[qtd]
+			txt=texts[qtd]
+			sub=int(txt)-int(senh)
+			qtd+=1
+			descr.append(str(sub))
+	
+		#vendo se os valores são iguais e juntando
+		numdesc=[]
+		for d in descr:
+			for y in codesc:
+				if d==y:
+					numdesc.append(codesc.index(y))
+	
+		#transformando os numeros em letras
+		res=''
+		for n in numdesc:
+			for k in alfabeto:
+				if int(n)==alfabeto.index(k):
+					res+=k
+		#para caso o texto criptografado esteja errado
+		if res=='':
+			print('Não reconheço o texto ou a senha esta errada.')
+		
+		print(res)
+		
+	else:
+		print('Não consegui entender se você quer criptografar ou descriptografar.')	
+
+escolha = input('Você deseja criptografar(c) ou descriptografar(d) o texto?:')
+escrita = input('Escreva o texto a ser criptografado/descriptografado:')
+password = input('Escreva a/uma senha:')
+#alfabeto e sinais se quiser colocar
+alfab = list('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789!?áéíóãõ:;,.ç()/âê$&')
+#os seis digitos que seje menor que 5000(mesma quantidade de itens pelas quantidades de caracter que tiver no alfabeto)
+cod = '103644,199951,344414,118273,204700,481391,355574,374277,128466,445758,460272,425881,281654,272661,202186,157499,325869,368355,128820,233950,106645,282536,343784,175419,319617,470589,128302,206338,147000,477403,235340,495016,139808,224799,326202,100444,420248,249672,158831,316945,276352,189202,350281,317251,371072,412346,490439,191341,386511,432554,477363,167220,128796,386560,273118,197283,205070,183431,410092,372123,332785,333882,359339,278868,194630,443267,239183,464310,144632,150499,291199,468873,415455,412194,144858,211971,387814,271734,439413,170236,281788,374547,244102'
+cod = cod.split(',')
+#numeros aleatorios que seje menor que 5000(mesma quantidade de itens que tiver no cod)
+cod_pass = ('298858,292967,416871,338929,360291,296203,488467,311676,148283,132229,392854,304749,462832,388581,317566,424379,103940,371491,368837,270568,271605,480959,146665,243315,459596,210753,451051,236388,374146,467105,375764,356019,309021,450015,427034,202208,182918,265714,311094,281186,370909,101740,109248,274259,285459,358092,140193,393890,220334,341002,191463,240079,388000,450469,369291,212826,175991,180263,167446,205899,490540,436615,492158,325530,131648,419525,143429,171718,193081,128993,321257,144465,381073,258787,225643,137538,295622,221371,150356,257169,336729,204281,201626')
+cod_pass = cod_pass.split(',')
+criptografia = cript(escrita, alfab, cod, password, cod_pass, escolha)
