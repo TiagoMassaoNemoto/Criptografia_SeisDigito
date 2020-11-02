@@ -1,4 +1,8 @@
+import os
 def cript(texto, alfabeto, codesc, senha, codsen, erabe):
+	os.system('cls')
+	
+	#criptografia
 	if erabe=='c':
 		num_esc=[]
 		num_sen=''
@@ -6,7 +10,19 @@ def cript(texto, alfabeto, codesc, senha, codsen, erabe):
 		sen=[]
 		res=''
 	
-		#texto para codigo
+		#tratamento de erro de texto caso vazio
+		if texto=='':
+			print('Não há texto a ser criptografado.')
+			choo=input('Gostaria de tentar novamente (s/n)?:')
+			if choo=='s':
+				texto=input('Escreva seu texto novamente:')
+			elif choo=='n':
+				quit()
+			else:
+				print('Infelizmente não consigo entender.')
+				quit()
+			os.system('cls')
+		#texto para codigo		
 		for x in texto:
 			for ka in alfabeto:
 				if x==ka:
@@ -16,7 +32,20 @@ def cript(texto, alfabeto, codesc, senha, codsen, erabe):
 				if int(z)==codesc.index(y):
 					crip.append(y)
 						
-		#senha para criptografar e descriptografar			
+		#tratamento de erro da senha caso vazio
+		if senha=='':
+			print('Não há senha para criptografar o texto.')		
+			choo=input('Gostaria de tentar novamente (s/n)?:')
+			if choo=='s':
+				senha=input('Escreva sua senha novamente:')
+			elif choo=='n':
+				quit()
+			else:
+				print('Infelizmente não consigo entender.')
+				quit()
+			os.system('cls')
+				
+		#senha para criptografar e descriptografar
 		for a in senha:
 			for ka in alfabeto:
 				if a==ka:
@@ -43,14 +72,47 @@ def cript(texto, alfabeto, codesc, senha, codsen, erabe):
 			res+=str(soma)
 			t+=1
 			u+=1
-		print(res)
-		
+			
+		if res=='':
+			print('Texto/Senha com caracter não suportado.')
+		else:	
+			print('Seu texto criptografado é: \n{}'.format(res))
+	
+	#descriptografia				
 	elif erabe=='d':
-		#vendo se tem só numeros
+						
+		#tratamento de erro caso texto esteja vazio		
+		if texto=='':
+			print('Não há texto a ser descriptografado.')
+			choo=input('Gostaria de tentar novamente (s/n)?:')
+			if choo=='s':
+				texto=input('Escreva seu texto novamente:')
+			elif choo=='n':
+				quit()
+			else:
+				print('Infelizmente não consigo entender.')
+				quit()
+			os.system('cls')
+		
+		#tratamento de erro caso senha esteja vazio
+		if senha=='':
+			print('Não há senha para descriptografar o texto.')
+			choo=input('Gostaria de tentar novamente (s/n)?:')
+			if choo=='s':
+				senha=input('Escreva sua senha novamente:')
+			elif choo=='n':
+				quit()
+			else:
+				print('Infelizmente não consigo entender.')
+				quit()
+			os.system('cls')
+			
+		#tratamento de erro caso haja outras caracteres alem dos numeros decimais
 		for x in texto:
 			if x!='1' and x!='2' and x!='3' and x!='4' and x!='5' and x!='6' and x!='7' and x!='8' and x!='9' and x!='0':
-				print('Só aceito numeros para descriptografar')
+				print('Só aceito numeros para descriptografar.')
 				quit()
+		
 		#para separar os numeros de 6 em 6 do texto
 		tt=len(texto)/6
 		junt=''
@@ -116,12 +178,13 @@ def cript(texto, alfabeto, codesc, senha, codsen, erabe):
 					res+=k
 		#para caso o texto criptografado esteja errado
 		if res=='':
-			print('Não reconheço o texto ou a senha esta errada.')
-		
-		print(res)
-		
+			print('Texto faltando números.')
+		else:
+			print('Seu texto descriptografado é: \n{}'.format(res))
+	
+	#caso erabe seja diferente de de 'c' ou 'd'
 	else:
-		print('Não consegui entender se você quer criptografar ou descriptografar.')	
+		print('Não consegui entender se você quer criptografar ou descriptografar.')
 
 escolha = input('Você deseja criptografar(c) ou descriptografar(d) o texto?:')
 escrita = input('Escreva o texto a ser criptografado/descriptografado:')
